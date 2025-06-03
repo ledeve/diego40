@@ -1,12 +1,21 @@
 {
-  "ethereum": {
-    "usd": 2621.13
+  "banana-for-scale-2": {
+    "usd": 0.00639673
   },
-  "golem": {
-    "usd": 0.246519
+  "cumrocket": {
+    "usd": 0.00294631
   },
-  "solana": {
-    "usd": 160.57
+  "fartcoin": {
+    "usd": 1.16
   },
-  "lastUpdate": "2025-06-03T19:16:07.884Z"
+  "melania-meme": {
+    "usd": 0.359973
+  },
+  "official-trump": {
+    "usd": 11.47
+  },
+  "unicorn-fart-dust": {
+    "usd": 0.030215
+  },
+  "lastUpdate": "2025-06-03T19:20:16.448Z"
 }
