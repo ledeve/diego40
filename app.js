@@ -14,7 +14,12 @@ const portfolio = [
     CoinGecko API reference:
     https://www.coingecko.com/api/documentations/v3#/simple/get_simple_price
   */
-  fetch("prices.json")
+  fetch("prices.json", {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache'
+    }
+  })
     .then((resp) => resp.json())
     .then((prices) => {
       const tbody = document.querySelector("#portfolio-table tbody");
