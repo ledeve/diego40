@@ -45,18 +45,27 @@ table {
   margin: 1rem 0;
   border-radius: 0.5rem;
   overflow: hidden;
+  border: 1px solid var(--border-color);
 }
 
 th, td {
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
   text-align: center;
 }
 
+/* Remove right border from last column */
+th:last-child, td:last-child {
+  border-right: none;
+}
+
 /* First column styling */
-th:first-child, td:first-child {
+td:first-child {
   text-align: left;
   min-width: 200px;
+  background-color: #f8fafc;
+  font-weight: 600;
 }
 
 /* Zebra striping */
@@ -64,7 +73,16 @@ tbody tr:nth-child(even) {
   background-color: var(--hover-bg);
 }
 
-/* Remove the old text alignment rules since we're centering everything */
+/* Total row styling */
+tfoot tr {
+  background-color: #e2e8f0 !important;
+  font-weight: 600;
+}
+
+tfoot th, tfoot td {
+  border-top: 2px solid var(--border-color);
+}
+
 /* Text columns */
 /* th:first-child, td:first-child {
   text-align: left;
@@ -86,8 +104,8 @@ th {
   letter-spacing: 0.05em;
 }
 
-tbody tr:hover {
-  background-color: var(--hover-bg);
+tbody tr:hover td {
+  background-color: #dcfce7 !important;
 }
 
 tfoot th {
