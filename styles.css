@@ -127,6 +127,28 @@ tfoot th {
   max-width: 300px;
   width: auto;
   object-fit: contain;
+  border-radius: 20px;
+  display: block;
+  border: 1px solid var(--border-color);
+}
+
+.signature {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.signature span {
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.signature-image {
+  max-height: 200px;
+  width: auto;
   border-radius: 12px;
   display: block;
 } 
