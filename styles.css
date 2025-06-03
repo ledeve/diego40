@@ -30,10 +30,12 @@ body {
 }
 
 h1 {
-  margin: 0 0 2rem 0;
+  margin: 0 0 1rem 0;
   font-size: 2rem;
   font-weight: 700;
   color: var(--header-bg);
+  text-align: center;
+  display: block;
 }
 
 table {
@@ -48,19 +50,32 @@ table {
 th, td {
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
+  text-align: center;
 }
 
-/* Text columns */
+/* First column styling */
 th:first-child, td:first-child {
   text-align: left;
+  min-width: 200px;
 }
 
+/* Zebra striping */
+tbody tr:nth-child(even) {
+  background-color: var(--hover-bg);
+}
+
+/* Remove the old text alignment rules since we're centering everything */
+/* Text columns */
+/* th:first-child, td:first-child {
+  text-align: left;
+} */
+
 /* Number columns */
-th:not(:first-child), td:not(:first-child) {
+/* th:not(:first-child), td:not(:first-child) {
   text-align: right;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
-}
+} */
 
 th {
   background-color: var(--header-bg);
