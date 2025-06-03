@@ -4,9 +4,9 @@
   ──────────────────────────────────────────────────────────────────────
 */
 const portfolio = [
-    { id: "ethereum", name: "Ethereum", units: 100, initialPrice: 230 },
-    { id: "solana", name: "Solana", units: 200, initialPrice: 10 },
-    { id: "golem", name: "Golem", units: 100, initialPrice: 0.11 },
+    { id: "ethereum", name: "Ethereum", ticker: "ETH", units: 100, initialPrice: 230 },
+    { id: "solana", name: "Solana", ticker: "SOL", units: 200, initialPrice: 10 },
+    { id: "golem", name: "Golem", ticker: "GLM", units: 100, initialPrice: 0.11 },
   ];
   
   /*
@@ -56,6 +56,7 @@ const portfolio = [
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${asset.name}</td>
+          <td>${asset.ticker}</td>
           <td>${asset.units.toLocaleString()}</td>
           <td>${asset.initialPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
           <td>${initialValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -70,7 +71,7 @@ const portfolio = [
       const portfolioPLPercent = portfolioInitialTotal === 0 ? 0 : ((portfolioTotal - portfolioInitialTotal) / portfolioInitialTotal) * 100;
       tfoot.innerHTML = `
         <tr>
-          <th colspan="3">Portfolio Total</th>
+          <th colspan="4">Portfolio Total</th>
           <th>${portfolioInitialTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</th>
           <th></th>
           <th>${portfolioTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</th>
@@ -82,7 +83,7 @@ const portfolio = [
       console.error("Failed to load prices.json", err);
       const tbody = document.querySelector("#portfolio-table tbody");
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td colspan="7">Unable to load current prices. Please try again later.</td>`;
+      tr.innerHTML = `<td colspan="8">Unable to load current prices. Please try again later.</td>`;
       tbody.appendChild(tr);
     });
   
