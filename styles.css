@@ -1,0 +1,116 @@
+:root {
+  --primary-color: #2563eb;
+  --positive-color: #059669;
+  --negative-color: #dc2626;
+  --background-color: #f0f9ff;
+  --card-background: #ffffff;
+  --text-color: #1e293b;
+  --border-color: #e2e8f0;
+  --header-bg: #1e40af;
+  --header-text: #ffffff;
+  --hover-bg: #f1f5f9;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--card-background);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+h1 {
+  margin: 0 0 2rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--header-bg);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Text columns */
+th:first-child, td:first-child {
+  text-align: left;
+}
+
+/* Number columns */
+th:not(:first-child), td:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+th {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+tbody tr:hover {
+  background-color: var(--hover-bg);
+}
+
+tfoot th {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  font-weight: 600;
+  border-top: 2px solid var(--border-color);
+}
+
+.positive {
+  color: var(--positive-color);
+  font-weight: 600;
+}
+
+.negative {
+  color: var(--negative-color);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+  
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.last-update {
+  text-align: right;
+  color: #64748b;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+} 
