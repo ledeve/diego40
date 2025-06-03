@@ -113,4 +113,18 @@ tfoot th {
   color: #64748b;
   font-size: 0.875rem;
   margin-top: 1rem;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.title-image {
+  height: 200px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 12px;
 } 
