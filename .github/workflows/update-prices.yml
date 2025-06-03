@@ -23,7 +23,7 @@ jobs:
           const https = require('https');
           const fs = require('fs');
 
-          const coins = ['ethereum', 'solana', 'golem'];
+          const coins = ['official-trump', 'melania-meme', 'fartcoin', 'banana-for-scale-2', 'cumrocket', 'unicorn-fart-dust'];
           const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coins.join(',')}&vs_currencies=usd`;
 
           function makeRequest(retries = 3, delay = 1000) {
