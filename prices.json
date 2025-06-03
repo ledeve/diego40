@@ -1,1 +1,12 @@
-{"ethereum":{"usd":2613.74},"golem":{"usd":0.244709},"solana":{"usd":161.17}}
+{
+  "ethereum": {
+    "usd": 2620.77
+  },
+  "golem": {
+    "usd": 0.245071
+  },
+  "solana": {
+    "usd": 161.17
+  },
+  "lastUpdate": "2025-06-03T13:47:53.938Z"
+}
