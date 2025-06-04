@@ -37,7 +37,7 @@ const portfolio = [
       // Display last update date
       const lastUpdateDate = new Date(prices.lastUpdate);
       const lastUpdateElement = document.querySelector("#last-update");
-      lastUpdateElement.textContent = `Last updated: ${lastUpdateDate.toLocaleString()}`;
+      lastUpdateElement.textContent = `Last updated: ${lastUpdateDate.toLocaleString()} (automatic refresh of fx rates every 6 hours)`;
   
       portfolio.forEach((asset) => {
         // If a coin ID isn't present in the prices.json (network hiccup), skip it gracefully.

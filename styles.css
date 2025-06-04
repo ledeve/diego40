@@ -31,11 +31,32 @@ body {
 
 h1 {
   margin: 0 0 1rem 0;
-  font-size: 2rem;
+  font-size: 3.5rem;
   font-weight: 700;
   color: var(--header-bg);
   text-align: center;
   display: block;
+  font-family: 'Righteous', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  background: linear-gradient(45deg, var(--header-bg), #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 1rem 0;
+  position: relative;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--header-bg), transparent);
+  border-radius: 2px;
 }
 
 table {
@@ -199,6 +220,85 @@ tfoot th {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
+  position: relative;
+  overflow: visible;
+  padding: 2rem 0;
+}
+
+.title-container::before,
+.title-container::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.confetti {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  opacity: 0;
+  animation: confetti-fall 1.5s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Position confetti with more density */
+.confetti:nth-child(1) { left: 5%; top: 20%; animation-delay: 0s; }
+.confetti:nth-child(2) { left: 8%; top: 80%; animation-delay: 0.1s; }
+.confetti:nth-child(3) { left: 12%; top: 30%; animation-delay: 0.2s; }
+.confetti:nth-child(4) { left: 15%; top: 70%; animation-delay: 0.3s; }
+.confetti:nth-child(5) { left: 18%; top: 40%; animation-delay: 0.4s; }
+.confetti:nth-child(6) { left: 22%; top: 60%; animation-delay: 0.5s; }
+.confetti:nth-child(7) { left: 25%; top: 25%; animation-delay: 0.6s; }
+.confetti:nth-child(8) { left: 28%; top: 75%; animation-delay: 0.7s; }
+.confetti:nth-child(9) { left: 32%; top: 35%; animation-delay: 0.8s; }
+.confetti:nth-child(10) { left: 35%; top: 65%; animation-delay: 0.9s; }
+.confetti:nth-child(11) { left: 38%; top: 45%; animation-delay: 1.0s; }
+.confetti:nth-child(12) { left: 42%; top: 55%; animation-delay: 1.1s; }
+.confetti:nth-child(13) { left: 45%; top: 15%; animation-delay: 1.2s; }
+.confetti:nth-child(14) { left: 48%; top: 85%; animation-delay: 1.3s; }
+.confetti:nth-child(15) { left: 52%; top: 25%; animation-delay: 1.4s; }
+.confetti:nth-child(16) { left: 55%; top: 75%; animation-delay: 1.5s; }
+.confetti:nth-child(17) { left: 58%; top: 35%; animation-delay: 1.6s; }
+.confetti:nth-child(18) { left: 62%; top: 65%; animation-delay: 1.7s; }
+.confetti:nth-child(19) { left: 65%; top: 45%; animation-delay: 1.8s; }
+.confetti:nth-child(20) { left: 68%; top: 55%; animation-delay: 1.9s; }
+
+/* Colorful confetti pieces with different shapes */
+.confetti:nth-child(1) { background: #FF69B4; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.confetti:nth-child(2) { background: #4CAF50; clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); }
+.confetti:nth-child(3) { background: #FFD700; border-radius: 50%; }
+.confetti:nth-child(4) { background: #FF4500; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+.confetti:nth-child(5) { background: #9370DB; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+.confetti:nth-child(6) { background: #00CED1; clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%); }
+.confetti:nth-child(7) { background: #FF1493; clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
+.confetti:nth-child(8) { background: #32CD32; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+.confetti:nth-child(9) { background: #FFA500; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.confetti:nth-child(10) { background: #1E90FF; clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); }
+.confetti:nth-child(11) { background: #FF69B4; border-radius: 50%; }
+.confetti:nth-child(12) { background: #4CAF50; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+.confetti:nth-child(13) { background: #FFD700; clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+.confetti:nth-child(14) { background: #FF4500; clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%); }
+.confetti:nth-child(15) { background: #9370DB; clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
+.confetti:nth-child(16) { background: #00CED1; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+.confetti:nth-child(17) { background: #FF1493; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.confetti:nth-child(18) { background: #32CD32; clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); }
+.confetti:nth-child(19) { background: #FFA500; border-radius: 50%; }
+.confetti:nth-child(20) { background: #1E90FF; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+
+/* Add shadow to confetti for better visibility */
+.confetti::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(0.5px);
+  opacity: 0.8;
+  z-index: -1;
 }
 
 .title-image {
@@ -230,4 +330,89 @@ tfoot th {
   width: auto;
   border-radius: 12px;
   display: block;
+}
+
+.birthday-message {
+  text-align: center;
+  margin: 1rem 0 2rem;
+  padding: 1rem;
+  background: linear-gradient(45deg, var(--primary-color), var(--positive-color));
+  color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.birthday-message p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes float-wave {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(15px) rotate(-5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.balloons-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 2rem 0;
+  min-height: 100px;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.balloon {
+  font-size: 2.5rem;
+  animation: float-wave 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+.balloon:nth-child(1) { animation-delay: 0s; }
+.balloon:nth-child(2) { animation-delay: 0.2s; }
+.balloon:nth-child(3) { animation-delay: 0.4s; }
+.balloon:nth-child(4) { animation-delay: 0.6s; }
+.balloon:nth-child(5) { animation-delay: 0.8s; }
+.balloon:nth-child(6) { animation-delay: 1.0s; }
+.balloon:nth-child(7) { animation-delay: 1.2s; }
+.balloon:nth-child(8) { animation-delay: 1.4s; }
+.balloon:nth-child(9) { animation-delay: 1.6s; }
+.balloon:nth-child(10) { animation-delay: 1.8s; }
+.balloon:nth-child(11) { animation-delay: 2.0s; }
+.balloon:nth-child(12) { animation-delay: 2.2s; }
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10px) translateX(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(10px) translateX(5px) rotate(90deg) scale(0.9);
+  }
+  50% {
+    transform: translateY(20px) translateX(-5px) rotate(180deg) scale(0.8);
+  }
+  75% {
+    transform: translateY(30px) translateX(5px) rotate(270deg) scale(0.7);
+  }
+  100% {
+    transform: translateY(40px) translateX(0) rotate(360deg) scale(0.6);
+    opacity: 0;
+  }
 } 
