@@ -4,12 +4,12 @@
   ──────────────────────────────────────────────────────────────────────
 */
 const portfolio = [
-    { id: "official-trump", name: "Official Trump", ticker: "$TRUMP", units: 4.5, initialPrice: 11 },
-    { id: "melania-meme", name: "Melania Meme", ticker: "$MELANIA", units: 93, initialPrice: 0.32 },
-    { id: "fartcoin", name: "Fartcoin", ticker: "$FARTCOIN", units: 29, initialPrice: 1.2 },
-    { id: "banana-for-scale-2", name: "Banana For Scale", ticker: "$BANANAS31", units: 4285, initialPrice: 0.007 },
-    { id: "cumrocket", name: "CumRockets", ticker: "$CUMMIES", units: 10000, initialPrice: 0.003 },
-    { id: "unicorn-fart-dust", name: "Unicorn Fart Dust", ticker: "$UFD", units: 714, initialPrice: 0.035 },
+    { id: "official-trump", name: "Official Trump", ticker: "$TRUMP", units: 4.44, initialPrice: 11.03 },
+    { id: "melania-meme", name: "Melania Meme", ticker: "$MELANIA", units: 84.54, initialPrice: 0.348 },
+    { id: "fartcoin", name: "Fartcoin", ticker: "$FARTCOIN", units: 32.67, initialPrice: 1.05 },
+    { id: "banana-for-scale-2", name: "Banana For Scale", ticker: "$BANANAS31", units: 5438.5, initialPrice: 0.006114 },
+    { id: "cumrocket", name: "CumRockets", ticker: "$CUMMIES", units: 10325.3, initialPrice: 0.002993 },
+    { id: "unicorn-fart-dust", name: "Unicorn Fart Dust", ticker: "$UFD", units: 920.64, initialPrice: 0.02669 },
   ];
   
   /*
