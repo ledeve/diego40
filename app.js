@@ -61,11 +61,11 @@ const portfolio = [
           <td>${asset.name}</td>
           <td>${asset.ticker}</td>
           <td>${asset.units.toLocaleString()}</td>
-          <td>${asset.initialPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td>${initialValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td>${currentPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td>${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td class="${plPercent >= 0 ? "positive" : "negative"}">${plPercent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</td>`;
+          <td>${asset.initialPrice.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</td>
+          <td>${initialValue.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</td>
+          <td>${currentPrice.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</td>
+          <td>${totalValue.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</td>
+          <td class="${plPercent >= 0 ? "positive" : "negative"}">${plPercent.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}%</td>`;
         tbody.appendChild(tr);
       });
   
@@ -75,10 +75,10 @@ const portfolio = [
       tfoot.innerHTML = `
         <tr>
           <th colspan="4">Portfolio Total</th>
-          <th>${portfolioInitialTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</th>
+          <th>${portfolioInitialTotal.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</th>
           <th></th>
-          <th>${portfolioTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</th>
-          <th class="${portfolioPLPercent >= 0 ? "positive" : "negative"}">${portfolioPLPercent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</th>
+          <th>${portfolioTotal.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</th>
+          <th class="${portfolioPLPercent >= 0 ? "positive" : "negative"}">${portfolioPLPercent.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}%</th>
         </tr>`;
       document.querySelector("#portfolio-table").appendChild(tfoot);
     })
