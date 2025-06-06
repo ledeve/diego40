@@ -47,6 +47,23 @@ h1 {
   position: relative;
 }
 
+h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--header-bg);
+  text-align: center;
+  display: block;
+  font-family: 'Righteous', cursive;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+  background: linear-gradient(45deg, var(--header-bg), #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 0.5rem 0;
+}
+
 h1::after {
   content: '';
   position: absolute;
