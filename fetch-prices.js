@@ -59,6 +59,15 @@ async function fetchWithRetries(maxRetries = 4, initialDelayMs = 1000, hostForRe
         continue;
       }
 
+      // If we used the Public host with a Pro key, CoinGecko returns a 400 with error_code 10010.
+      // In that case, automatically retry using the PRO host once.
+      if (status === 400 && isProKeyError(err) && hostForRequest === PUBLIC_HOST) {
+        hostForRequest = PRO_HOST;
+        attempt = 0;
+        delay = initialDelayMs;
+        continue;
+      }
+
       if (!retriable || attempt > maxRetries) {
         throw err;
       }
@@ -132,6 +141,24 @@ function doRequest(hostname) {
     try {
       const obj = typeof payload === 'string' ? JSON.parse(payload) : payload;
       if (obj && (obj.error_code === 10011 || /Demo API key/i.test(JSON.stringify(obj)))) {
+        return true;
+      }
+    } catch {
+      // ignore parse errors
+    }
+    return false;
+  };
+
+  // Detect CoinGecko pro key used against public host
+  // Shape example:
+  // { "timestamp":"...", "error_code":10010, "status":{"error_message":"If you are using Pro API key ..."}}
+  global.isProKeyError = function isProKeyError(error) {
+    if (!error) return false;
+    const payload = error.response;
+    if (!payload) return false;
+    try {
+      const obj = typeof payload === 'string' ? JSON.parse(payload) : payload;
+      if (obj && (obj.error_code === 10010 || /Pro API key/i.test(JSON.stringify(obj)))) {
         return true;
       }
     } catch {
