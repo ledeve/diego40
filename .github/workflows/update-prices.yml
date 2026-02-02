@@ -5,6 +5,9 @@ on:
     - cron: '0 */6 * * *'  # Runs every 6 hours
   workflow_dispatch:  # Allows manual triggering
 
+permissions:
+  contents: write
+
 jobs:
   update-prices:
     runs-on: ubuntu-latest
@@ -16,68 +19,10 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Fetch prices and update JSON
-        run: |
-          # Create a temporary JavaScript file to fetch prices
-          cat > fetch-prices.js << 'EOF'
-          const https = require('https');
-          const fs = require('fs');
-
-          const coins = ['official-trump', 'melania-meme', 'fartcoin', 'banana-for-scale-2', 'cumrocket', 'unicorn-fart-dust'];
-          const url = `https://api.coingecko.com/api/v3/simple/price?ids=${coins.join(',')}&vs_currencies=usd`;
-
-          function makeRequest(retries = 3, delay = 1000) {
-            https.get(url, (res) => {
-              let data = '';
-              
-              // Handle rate limiting
-              if (res.statusCode === 429) {
-                console.log('Rate limit hit, retrying after delay...');
-                if (retries > 0) {
-                  setTimeout(() => makeRequest(retries - 1, delay * 2), delay);
-                } else {
-                  console.error('Max retries reached');
-                  process.exit(1);
-                }
-                return;
-              }
-              
-              // Handle other errors
-              if (res.statusCode !== 200) {
-                console.error(`HTTP error! status: ${res.statusCode}`);
-                process.exit(1);
-              }
-              
-              res.on('data', (chunk) => { data += chunk; });
-              res.on('end', () => {
-                try {
-                  const prices = JSON.parse(data);
-                  // Add timestamp
-                  prices.lastUpdate = new Date().toISOString();
-                  // Write to file
-                  fs.writeFileSync('prices.json', JSON.stringify(prices, null, 2));
-                  console.log('Prices updated successfully');
-                } catch (e) {
-                  console.error('Error parsing response:', e);
-                  process.exit(1);
-                }
-              });
-            }).on('error', (e) => {
-              console.error('Network error:', e);
-              if (retries > 0) {
-                setTimeout(() => makeRequest(retries - 1, delay * 2), delay);
-              } else {
-                process.exit(1);
-              }
-            });
-          }
-
-          // Start the request
-          makeRequest();
-          EOF
-
-          # Run the script
-          node fetch-prices.js
+      - name: Fetch latest prices
+        env:
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+        run: node fetch-prices.js
           
       - name: Commit and push if changed
         run: |
