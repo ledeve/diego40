@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: update-prices
+  cancel-in-progress: true
+
 jobs:
   update-prices:
     runs-on: ubuntu-latest

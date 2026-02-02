@@ -15,11 +15,9 @@ const coins = [
 ];
 
 const apiKey = process.env.COINGECKO_API_KEY || '';
-// Prefer Pro host when an API key is provided, but we will auto-fallback to the public host
-// if the key is a Demo key (CoinGecko error_code 10011).
-const PRO_HOST = 'pro-api.coingecko.com';
+// DEMO key → always use public host; do not send Pro header
 const PUBLIC_HOST = 'api.coingecko.com';
-const initialHost = apiKey ? PRO_HOST : PUBLIC_HOST;
+const initialHost = PUBLIC_HOST;
 // Encode each id, not the comma separators
 const idsParam = coins.map((id) => encodeURIComponent(id)).join(',');
 const path = `/api/v3/simple/price?ids=${idsParam}&vs_currencies=usd`;
@@ -28,7 +26,33 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function fetchWithRetries(maxRetries = 4, initialDelayMs = 1000, hostForRequest = initialHost) {
+function parseRetryAfterMs(headers) {
+  if (!headers) return 0;
+  const retryAfter = headers['retry-after'];
+  if (retryAfter) {
+    const seconds = Number(retryAfter);
+    if (!Number.isNaN(seconds)) {
+      return Math.max(0, seconds * 1000);
+    }
+    const dateMs = Date.parse(retryAfter);
+    if (!Number.isNaN(dateMs)) {
+      const delta = dateMs - Date.now();
+      return Math.max(0, delta);
+    }
+  }
+  const resetEpoch =
+    Number(headers['x-ratelimit-reset']) ||
+    Number(headers['ratelimit-reset']) ||
+    Number(headers['x-rl-reset']);
+  if (!Number.isNaN(resetEpoch) && resetEpoch > 0) {
+    const resetMs = resetEpoch * 1000;
+    const delta = resetMs - Date.now();
+    return Math.max(0, delta);
+  }
+  return 0;
+}
+
+async function fetchWithRetries(maxRetries = 6, initialDelayMs = 1000, hostForRequest = initialHost) {
   let attempt = 0;
   let delay = initialDelayMs;
 
@@ -49,27 +73,17 @@ async function fetchWithRetries(maxRetries = 4, initialDelayMs = 1000, hostForRe
         throw new Error(message);
       }
 
-      // If we used the Pro host with a Demo key, CoinGecko returns a 400 with error_code 10011.
-      // In that case, automatically retry using the PUBLIC host once.
-      if (status === 400 && isDemoKeyError(err) && hostForRequest === PRO_HOST) {
-        hostForRequest = PUBLIC_HOST;
-        // reset attempt counter for clarity but keep backoff progression minimal
-        attempt = 0;
-        delay = initialDelayMs;
-        continue;
-      }
-
-      // If we used the Public host with a Pro key, CoinGecko returns a 400 with error_code 10010.
-      // In that case, automatically retry using the PRO host once.
-      if (status === 400 && isProKeyError(err) && hostForRequest === PUBLIC_HOST) {
-        hostForRequest = PRO_HOST;
-        attempt = 0;
-        delay = initialDelayMs;
-        continue;
-      }
+      // With demo key/public host, just backoff on 429/5xx.
 
       if (!retriable || attempt > maxRetries) {
         throw err;
+      }
+
+      if (status === 429) {
+        const waitMs = Math.max(delay, parseRetryAfterMs(err.headers)) + Math.floor(Math.random() * 500);
+        await sleep(waitMs);
+        delay = Math.min(Math.max(delay * 2, 1000), 60000);
+        continue;
       }
 
       const jitter = Math.floor(Math.random() * 250);
@@ -84,9 +98,7 @@ function doRequest(hostname) {
     'User-Agent': 'diego40-price-fetcher/1.0 (+github-actions)',
     'Accept': 'application/json',
   };
-  if (apiKey) {
-    headers['x-cg-pro-api-key'] = apiKey;
-  }
+  // No Pro header for demo key/public host
 
   const options = {
     hostname: hostname,
@@ -113,6 +125,7 @@ function doRequest(hostname) {
           } catch {
             error.response = body;
           }
+          error.headers = res.headers || {};
           return reject(error);
         }
 
@@ -130,46 +143,13 @@ function doRequest(hostname) {
   });
 }
 
-(function attachHelpers() {
-  // Detect CoinGecko demo key error payload
-  // Shape example:
-  // { "timestamp":"...", "error_code":10011, "status":{"error_message":"If you are using Demo API key ..."}}
-  global.isDemoKeyError = function isDemoKeyError(error) {
-    if (!error) return false;
-    const payload = error.response;
-    if (!payload) return false;
-    try {
-      const obj = typeof payload === 'string' ? JSON.parse(payload) : payload;
-      if (obj && (obj.error_code === 10011 || /Demo API key/i.test(JSON.stringify(obj)))) {
-        return true;
-      }
-    } catch {
-      // ignore parse errors
-    }
-    return false;
-  };
-
-  // Detect CoinGecko pro key used against public host
-  // Shape example:
-  // { "timestamp":"...", "error_code":10010, "status":{"error_message":"If you are using Pro API key ..."}}
-  global.isProKeyError = function isProKeyError(error) {
-    if (!error) return false;
-    const payload = error.response;
-    if (!payload) return false;
-    try {
-      const obj = typeof payload === 'string' ? JSON.parse(payload) : payload;
-      if (obj && (obj.error_code === 10010 || /Pro API key/i.test(JSON.stringify(obj)))) {
-        return true;
-      }
-    } catch {
-      // ignore parse errors
-    }
-    return false;
-  };
-})();
+// No host switching helpers needed for demo key
 
 (async function main() {
   try {
+    // Add a short random pre-sleep (5–20s) to avoid shared-IP spikes on public host
+    const preSleepMs = 5000 + Math.floor(Math.random() * 15000);
+    await sleep(preSleepMs);
     const prices = await fetchWithRetries();
     prices.lastUpdate = new Date().toISOString();
     fs.writeFileSync('prices.json', JSON.stringify(prices, null, 2));
