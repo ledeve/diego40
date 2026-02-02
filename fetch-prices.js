@@ -15,8 +15,11 @@ const coins = [
 ];
 
 const apiKey = process.env.COINGECKO_API_KEY || '';
-const host = 'api.coingecko.com';
-const path = `/api/v3/simple/price?ids=${encodeURIComponent(coins.join(','))}&vs_currencies=usd`;
+// Use Pro host when an API key is provided to avoid public API restrictions
+const host = apiKey ? 'pro-api.coingecko.com' : 'api.coingecko.com';
+// Encode each id, not the comma separators
+const idsParam = coins.map((id) => encodeURIComponent(id)).join(',');
+const path = `/api/v3/simple/price?ids=${idsParam}&vs_currencies=usd`;
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -113,6 +116,9 @@ function doRequest() {
     console.log('Prices updated successfully.');
   } catch (e) {
     console.error(e.message || e);
+    if (e.response) {
+      console.error('Response:', typeof e.response === 'string' ? e.response : JSON.stringify(e.response));
+    }
     process.exit(1);
   }
 })();
