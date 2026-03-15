@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 2px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #a78bfa;
+  cursor: pointer;
+  border: 2px solid #0a0a14;
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+}
+
+.chart-tab {
+  transition: all 0.2s;
+  cursor: pointer;
+  user-select: none;
+}
+.chart-tab:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Refresh bar */
+#refresh-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  font-size: 10px;
+  color: #444;
+  padding: 0 4px;
+  margin-bottom: 20px;
+  animation: slideUp 0.6s ease 0.25s both;
+}
+#refresh-bar-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(100, 100, 140, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+#refresh-bar-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #a78bfa, #00ccff);
+  transform-origin: left;
+  box-shadow: 0 0 6px rgba(167, 139, 250, 0.3);
+  transition: none;
+}
+#refresh-bar-fill.depleting {
+  background: linear-gradient(90deg, #ff9100, #ff6d00);
+  box-shadow: 0 0 6px rgba(255, 145, 0, 0.3);
+}
+#refresh-bar-fill.critical {
+  background: linear-gradient(90deg, #ff5252, #d50000);
+  box-shadow: 0 0 6px rgba(255, 82, 82, 0.3);
+}
+#refresh-countdown {
+  min-width: 28px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #333;
+}
+#refresh-label {
+  white-space: nowrap;
+  color: #333;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Sparkle cursor trail */
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  border-radius: 50%;
+  animation: sparkleFade 0.6s ease-out forwards;
+}
